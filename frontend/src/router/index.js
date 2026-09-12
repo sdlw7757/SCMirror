@@ -48,7 +48,9 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  // base 跟随 Vite 的 build.base（import.meta.env.BASE_URL）：
+  // 根部署='/',子路径部署='/SCMirror/'（VITE_BASE 注入）。保证 SPA 内路由/链接同样带前缀。
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior() {
     return { top: 0 }

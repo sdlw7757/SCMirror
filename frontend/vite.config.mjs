@@ -70,6 +70,9 @@ export default async () => {
         '@': path.join(__dirname, 'src'),
       },
     },
+    // 部署路径自适应（vite 顶层 base 字段）：默认 '/'（根域名：Cloudflare Pages / 本地 preview / 绑自定义域名的 GitHub Pages）。
+    // 部署到 GitHub Pages 默认子路径时传 VITE_BASE=/SCMirror/（仓库名），assets/资源 URL 即带该前缀，深链可访问。
+    base: process.env.VITE_BASE || '/',
     build: {
       outDir: 'dist',
       assetsDir: 'assets',

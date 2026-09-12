@@ -21,7 +21,8 @@ export const SITE_CONFIG = {
     '【免责声明】本站仅聚合整理网络公开元信息与下载链接，不存储镜像文件。软件版权归微软所有，请使用正版。本站仅供学习参考，不对文件安全与完整性负责。',
 }
 
-export const DATA_URL = '/data/iso_data.json'
+// 数据地址自适应部署路径：BASE_URL 默认 '/'；子路径（如 /SCMirror/）构建时自动带前缀。
+export const DATA_URL = `${import.meta.env.BASE_URL}data/iso_data.json`
 
 // SHA-256 校验工具下载链接（集中于此，便于更换）
 export const HASHER_URL = 'https://yun.139.com/shareweb/#/w/i/2xG3tQkP7njig'

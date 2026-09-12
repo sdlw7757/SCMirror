@@ -1,0 +1,62 @@
+# GitHub Pages 部署（构建 frontend/dist 并用 Actions 发布）
+#
+# 说明：
+# - 站点部署在 GitHub Pages 默认子路径 /SCMirror/ 下（https://<owner>.github.io/<repo>/）。
+#   VITE_BASE 让 assets/数据/路由都带仓库名前缀；SITE_URL 提供 SSR/canonical 的绝对地址。
+# - data/iso_data.json、public/sitemap.xml、public/robots.txt 均已纳入版本库，
+#   所以构建直接使用 checkout 中的数据，无需联网爬虫。若要每日自更新，可另加 crawler 步骤。
+# - 启用方式：GitHub 仓库 Settings → Pages → Source 选「GitHub Actions」。
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # 子路径部署：/SCMirror/（仓库名）。自定义域名绑到根路径时，改成 VITE_BASE: / 即可。
+      VITE_BASE: /${{ github.event.repository.name }}/
+      SITE_URL: https://${{ github.event.repository.owner.login }}.github.io/${{ github.event.repository.name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build static site
+        working-directory: frontend
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

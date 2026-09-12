@@ -63,7 +63,7 @@ function catName(db, key) {
 function card(item, db) {
   const m = item.meta_unified || {}
   const hash = (m.sha256 || (item.sources_raw?.[0]?.hash?.sha256) || '').slice(0, 16)
-  return `<a href="/detail/${esc(item.iso_key)}" class="ssr-card">
+  return `<a href="${SITE.url}/detail/${esc(item.iso_key)}" class="ssr-card">
   <span class="ssr-badge">${esc(catName(db, item.category_key))}</span>
   <span class="ssr-chip">${esc(m.arch || '')}</span><span class="ssr-chip">${esc(m.type || '')}</span>
   <h3>${esc(m.title)}</h3>
@@ -91,7 +91,7 @@ ${HEAD_ASSETS}
 ${body}
 </div>
 <footer class="ssr-foot">
-  <a href="/sitemap.xml" target="_blank" rel="nofollow">网站地图 (sitemap.xml)</a>
+  <a href="${SITE.url}/sitemap.xml" target="_blank" rel="nofollow">网站地图 (sitemap.xml)</a>
   <span class="ssr-copy">SeaCloud Mirror · 海云镜像 · 仅供学习参考</span>
 </footer>
 </div>
@@ -117,7 +117,7 @@ function homeSSR(db) {
   const st = db.stats || {}
   const items = (db.items || []).slice(0, 18)
   const cats = (db.categories || [])
-    .map((c) => `<a href="/category/${esc(c.key)}" class="ssr-pill">${esc(c.name)}</a>`)
+    .map((c) => `<a href="${SITE.url}/category/${esc(c.key)}" class="ssr-pill">${esc(c.name)}</a>`)
     .join('\n')
   const cards = items.map((it) => card(it, db)).join('\n')
   const body = `<header class="ssr-head">
@@ -134,7 +134,7 @@ function homeSSR(db) {
 <section>
   <h2>最新镜像</h2>
   <div class="ssr-grid">${cards}</div>
-  <p class="ssr-more"><a href="/tool-hash">哈希校验工具</a> · <a href="/wiki">知识库</a></p>
+  <p class="ssr-more"><a href="${SITE.url}/tool-hash">哈希校验工具</a> · <a href="${SITE.url}/wiki">知识库</a></p>
 </section>`
   return {
     title: `${SITE.name} - 多源 Windows 原版镜像聚合查询 | ${SITE.name_en}`,
@@ -170,7 +170,7 @@ function detailSSR(db, isoKey) {
     return {
       title: `未找到镜像 - ${SITE.name}`,
       description: '未找到该镜像。请返回首页重新搜索。',
-      body: `<header class="ssr-head"><h1>未找到该镜像</h1><p><a href="/">返回首页</a></p></header>`,
+      body: `<header class="ssr-head"><h1>未找到该镜像</h1><p><a href="${SITE.url}/">返回首页</a></p></header>`,
       url: `${SITE.url}/detail/${esc(isoKey)}`,
     }
   }
