@@ -1,6 +1,6 @@
 {
   "source": "xitongku",
-  "crawled_at": "2026-09-12 21:23:53",
+  "crawled_at": "2026-09-12 22:01:55",
   "items": [
     {
       "name": "64位",
@@ -5901,8 +5901,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -5959,8 +5959,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6013,8 +6013,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6067,8 +6067,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6121,8 +6121,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6175,8 +6175,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6229,8 +6229,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6283,8 +6283,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6337,8 +6337,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6391,8 +6391,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6441,8 +6441,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6491,8 +6491,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6541,8 +6541,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6591,8 +6591,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6641,8 +6641,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6691,8 +6691,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6741,8 +6741,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6791,8 +6791,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6837,8 +6837,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6883,8 +6883,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6929,8 +6929,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -6975,8 +6975,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7021,8 +7021,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7067,8 +7067,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7113,8 +7113,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7159,8 +7159,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7205,8 +7205,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7251,8 +7251,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7297,8 +7297,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7343,8 +7343,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7389,8 +7389,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7435,8 +7435,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7481,8 +7481,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7527,8 +7527,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7573,8 +7573,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7619,8 +7619,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7665,8 +7665,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7711,8 +7711,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7757,8 +7757,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7803,8 +7803,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7849,8 +7849,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7895,8 +7895,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7941,8 +7941,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -7987,8 +7987,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8033,8 +8033,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8079,8 +8079,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8121,8 +8121,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8163,8 +8163,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8205,8 +8205,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8247,8 +8247,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8289,8 +8289,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8331,8 +8331,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8373,8 +8373,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8415,8 +8415,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8457,8 +8457,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8499,8 +8499,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8545,8 +8545,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8591,8 +8591,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8637,8 +8637,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8683,8 +8683,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8729,8 +8729,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
@@ -8775,8 +8775,8 @@
       "support_end": "服务终止",
       "publish_date": "2022-10-18",
       "inner_version": 19045,
-      "lifecycle_state": "supported",
-      "lifecycle": "支持中",
+      "lifecycle_state": "ended",
+      "lifecycle": "已停止支持",
       "patch_url": "https://www.catalog.update.microsoft.com/Search.aspx?q=KB5122878"
     },
     {
