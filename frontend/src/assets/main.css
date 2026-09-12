@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============ 深色科技风基础 ============ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink-950 text-slate-200 antialiased;
+  background-image:
+    radial-gradient(1200px 500px at 15% -5%, rgba(6, 182, 212, 0.12), transparent 60%),
+    radial-gradient(900px 420px at 90% 0%, rgba(14, 165, 233, 0.08), transparent 55%),
+    radial-gradient(700px 400px at 50% 110%, rgba(6, 182, 212, 0.07), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* 细腻网格背景 */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 40%, transparent 100%);
+}
+
+/* ============ 组件层 ============ */
+@layer components {
+  .glass {
+    @apply bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-2xl;
+  }
+  .glass-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-glow-cyan;
+  }
+  .glow-text {
+    background: linear-gradient(120deg, #67e8f9, #38bdf8 45%, #818cf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-500 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-cyan-500/20 transition hover:brightness-110 active:scale-95;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 transition hover:border-cyan-400/40 hover:text-cyan-300;
+  }
+  .input-dark {
+    @apply w-full rounded-xl border border-white/10 bg-ink-900/70 px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 outline-none transition focus:border-cyan-400/60 focus:ring-2 focus:ring-cyan-400/20;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-slate-300;
+  }
+  .badge-cyan {
+    @apply inline-flex items-center rounded-md border border-cyan-400/30 bg-cyan-500/10 px-2 py-0.5 text-xs text-cyan-300;
+  }
+  .stat-value {
+    @apply font-mono text-2xl font-bold md:text-3xl glow-text;
+  }
+}
+
+/* ============ 滚动条 ============ */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0f1c;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+/* 卡片进入动画 */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.25s ease;
+}
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fade-slide-leave-to {
+  opacity: 0;
+}
+
+/* 打字机闪烁光标（哈希工具） */
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

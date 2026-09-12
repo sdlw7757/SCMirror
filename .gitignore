@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+*.local
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 爬虫临时/探测文件（如本仓库开发期使用的探针脚本）
+_probe_*.py
+_probe_*.ps1
+
+# 若不想把各站原始快照提交进仓库，可取消下面注释：
+# data/raw/
