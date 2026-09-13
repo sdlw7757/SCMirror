@@ -88,6 +88,7 @@ ${HEAD_ASSETS}
 <!-- 服务端静态内容（含静态 footer）：SPA 挂载后整块隐藏，避免与 Vue 页脚重复 -->
 <div id="ssr-shell">
 <div class="ssr-app">
+<div class="ssr-top"><a href="${SITE.url}/" class="ssr-logo"><span class="ssr-logo-mark">🌊</span><b>${esc(SITE.name)}</b><span class="ssr-logo-en">${esc(SITE.name_en)}</span></a></div>
 ${body}
 </div>
 <footer class="ssr-foot">
@@ -213,6 +214,11 @@ function wikiSSR() {
 
 const SSRCSS = `<style>
 .ssr-app{max-width:1200px;margin:0 auto;padding:20px;background:#05080f;color:#e2e8f0;font-family:system-ui,'Microsoft YaHei',sans-serif}
+.ssr-top{padding:8px 14px;border-bottom:1px solid #1e293b;margin-bottom:18px;border-radius:10px;background:#0d1424}
+.ssr-logo{display:inline-flex;align-items:center;gap:8px;color:#e2e8f0;text-decoration:none;font-weight:700;font-size:15px}
+.ssr-logo-mark{font-size:18px}
+.ssr-logo b{color:#67e8f9}
+.ssr-logo-en{margin-left:2px;font-size:10px;letter-spacing:.2em;color:#64748b;font-weight:400;text-transform:uppercase}
 .ssr-head{background:linear-gradient(120deg,#0e7490,#0284c7);color:#fff;padding:28px;border-radius:14px;margin-bottom:18px}
 .ssr-head h1{margin:0;font-size:26px}
 .ssr-head p{color:#cffafe;opacity:.92}

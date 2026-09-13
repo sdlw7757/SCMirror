@@ -92,15 +92,30 @@ SCMirror/
 - **前端页面**：运行时自动取当前访问域名（`window.location.origin`）。
 - **百度推送**：site 由环境变量 `BAIDU_SITE` 提供（建议与 `SITE_URL` 一致）。
 
-## 🚀 部署（Cloudflare Pages）
+## 🚀 部署
+
+### 方式一：Cloudflare Pages（推荐，根路径域名）
+
+在 Cloudflare Dashboard → Workers & Pages → 创建项目 → 连接 GitHub 仓库 `sdlw7757/SCMirror`。
+**务必按下面配置**（`package.json` 在 `frontend/` 子目录，Root 目录不设会导致 `npm ci` 找不到 lock 而构建失败）：
 
 | 配置项 | 值 |
 | --- | --- |
-| 构建目录 | `frontend` |
-| 构建命令 | `npm run build` |
-| 输出目录 | `dist` |
+| **Production branch** | `main` |
+| **Root directory**（构建根目录） | `frontend` |
+| **Build command** | `npm ci && npm run build` |
+| **Build output directory** | `dist` |
 
-推送仓库到 GitHub 即自动触发 Cloudflare Pages 构建；每日自动同步同样会触发重新构建。
+- 仓库删除重建后，需在 Cloudflare 里**重新连接新仓库**（或删除旧 Pages 项目重建），否则构建会失败/404。
+- 推送仓库到 `main` 即自动触发构建；每日自动同步（GitHub Actions 提交新数据）同样会触发重新构建。
+- Cloudflare 分配 `*.pages.dev` 为根路径部署，用默认 `/` base 构建即可（**不要**设置 `VITE_BASE`）。
+
+### 方式二：GitHub Pages（默认子路径 `<user>.github.io/<repo>/`）
+
+1. 仓库 **Settings → Pages → Source 选「GitHub Actions」**（不要把仓库根当站点，否则只会渲染 README）。
+2. 提交工作流 `.github/workflows/pages.yml` 已随仓库提供，推送 `main` 自动构建并发布 `frontend/dist`。
+3. 子路径部署由工作流自动注入 `VITE_BASE=/<repo>/` 与 `SITE_URL`，代码零改动。
+4. 绑定自定义域名到根路径后，仅需把工作流里 `VITE_BASE` 改为 `/`。
 
 ## 🔗 百度收录
 

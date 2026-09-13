@@ -22,6 +22,9 @@
       </div>
     </section>
 
+    <!-- 数据抓取 / 服务运行状态 -->
+    <DataStatus class="mb-4" />
+
     <!-- 统计双看板 -->
     <StatBoard class="mb-6" />
 
@@ -74,6 +77,7 @@ import { ref, computed } from 'vue'
 import { store, categoryName } from '../store'
 import { fuzzyFilter, applyFilters } from '../utils/search'
 import StatBoard from '../components/StatBoard.vue'
+import DataStatus from '../components/DataStatus.vue'
 import SearchBox from '../components/SearchBox.vue'
 import FilterBar from '../components/FilterBar.vue'
 import IsoCard from '../components/IsoCard.vue'
