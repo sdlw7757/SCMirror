@@ -35,8 +35,8 @@ onMounted(async () => {
     // 数据加载失败也触发就绪，避免预渲染挂起
     console.error(e)
   }
-  // 给首帧渲染留一点时间
-  setTimeout(fireReady, 300)
+  // 数据就绪后尽快派发就绪事件（hideShell 侧已改为轮询，无需固定 300ms 延迟）
+  setTimeout(fireReady, 0)
 })
 
 // 兜底：极端情况下 8 秒后仍触发一次

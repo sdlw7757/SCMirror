@@ -259,7 +259,8 @@ def write_json(path: str, obj) -> None:
     fd, tmp = tempfile.mkstemp(prefix=".tmp_", suffix=".json", dir=d or ".")
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
-            json.dump(obj, f, ensure_ascii=False, indent=2)
+            # 紧凑输出（无缩进）：iso_data.json 约 3.1MB→2.2MB，前端下载+解析更快
+            json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
         os.replace(tmp, path)
     except Exception:
         try:

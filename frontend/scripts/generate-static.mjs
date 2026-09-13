@@ -105,7 +105,21 @@ ${body}
 function hideShell() {
   var app = document.getElementById('app')
   var shell = document.getElementById('ssr-shell')
-  if (app && shell && app.children.length > 0) shell.style.display = 'none'
+  if (app && shell && app.children.length > 0) {
+    shell.style.display = 'none'
+    return
+  }
+  // 首帧未就绪则轮询等待（事件可能早于 Vue 渲染到达），最多 2 秒
+  var n = 0
+  var t = setInterval(function () {
+    n++
+    if (app && shell && app.children.length > 0) {
+      shell.style.display = 'none'
+      clearInterval(t)
+    } else if (n >= 40) {
+      clearInterval(t)
+    }
+  }, 50)
 }
 window.addEventListener('dsh-prerender-ready', hideShell)
 // 兜底：极端情况（事件未触发 / 首屏异常）10 秒后强制隐藏，避免永远双份

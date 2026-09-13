@@ -10,6 +10,7 @@
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'
+import zlib from 'node:zlib'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -69,11 +70,19 @@ const server = http.createServer((req, res) => {
     ext === '.html'
       ? 'no-cache, no-store, must-revalidate'
       : 'public, max-age=31536000, immutable'
+  // 本地预览启用 gzip（主要受益者是 3MB 的 iso_data.json），生产托管（Cloudflare Pages）已自动压缩
+  const COMPRESSIBLE = new Set(['.json', '.html', '.js', '.mjs', '.css', '.svg', '.xml', '.txt'])
+  const useGzip = COMPRESSIBLE.has(ext) && (req.headers['accept-encoding'] || '').includes('gzip')
   res.writeHead(200, {
     'Content-Type': MIME[ext] || 'application/octet-stream',
     'Cache-Control': cache,
+    ...(useGzip ? { 'Content-Encoding': 'gzip', 'Vary': 'Accept-Encoding' } : {}),
   })
-  fs.createReadStream(file).pipe(res)
+  if (useGzip) {
+    fs.createReadStream(file).pipe(zlib.createGzip()).pipe(res)
+  } else {
+    fs.createReadStream(file).pipe(res)
+  }
 })
 
 server.listen(PORT, () => {
