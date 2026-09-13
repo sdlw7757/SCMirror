@@ -100,14 +100,16 @@ ${body}
 <div id="app"></div>
 <script>window.__SSR__=true;</script>
 <script>
-// SPA 挂载成功（#app 有内容）后隐藏静态骨架（含静态 footer），避免双份展示
-window.addEventListener('load', function () {
-  setTimeout(function () {
-    var app = document.getElementById('app')
-    var shell = document.getElementById('ssr-shell')
-    if (app && shell && app.children.length > 0) shell.style.display = 'none'
-  }, 900)
-})
+// 数据就绪（SPA 首屏渲染完成，App 层派发 dsh-prerender-ready）后再隐藏静态骨架，
+// 避免在数据(约 3.5MB JSON)解析完成前提前隐藏，消除首开"空白/闪烁"
+function hideShell() {
+  var app = document.getElementById('app')
+  var shell = document.getElementById('ssr-shell')
+  if (app && shell && app.children.length > 0) shell.style.display = 'none'
+}
+window.addEventListener('dsh-prerender-ready', hideShell)
+// 兜底：极端情况（事件未触发 / 首屏异常）10 秒后强制隐藏，避免永远双份
+setTimeout(hideShell, 10000)
 </script>
 ${BODY_ASSETS}
 </body>

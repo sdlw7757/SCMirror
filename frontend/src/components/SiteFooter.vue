@@ -11,8 +11,6 @@
           <p class="text-xs leading-relaxed text-slate-500">
             聚合整理<a :href="homeOf('sjjzm')" target="_blank" rel="noopener noreferrer" class="font-medium text-cyan-300 underline-offset-2 transition hover:underline">山己几子木</a>、<a :href="homeOf('xitongku')" target="_blank" rel="noopener noreferrer" class="font-medium text-cyan-300 underline-offset-2 transition hover:underline">系统库</a>、<a :href="homeOf('hello')" target="_blank" rel="noopener noreferrer" class="font-medium text-cyan-300 underline-offset-2 transition hover:underline">HelloWindows</a>三站的 Windows 官方原版镜像元信息，以 SHA256 为主键统一去重与聚合。
           </p>
-          <!-- 数据抓取 / 服务运行状态（全站页脚可见） -->
-          <p v-if="syncLine" class="mt-1 text-[11px] text-slate-600">{{ syncLine }}</p>
         </div>
 
         <!-- ① 项目 GitHub 仓库可点击链接（抽为配置常量，改 src/config.js 即可） -->
@@ -55,12 +53,6 @@ import { SITE_CONFIG } from '../config'
 const site = computed(() => store.data?.site || {})
 const github = computed(() => store.data?.site?.github || SITE_CONFIG.github)
 const disclaimer = computed(() => store.data?.site?.disclaimer || SITE_CONFIG.disclaimer)
-// 页脚状态行：数据服务是否正常抓取（来自 stats.last_sync，由 crawler 写入）
-const syncLine = computed(() => {
-  const st = store.data?.stats
-  if (!st?.last_sync) return ''
-  return `数据服务运行正常 · 最近抓取 ${String(st.last_sync).slice(0, 16)} · 今日新增 ${st.today_new ?? 0} · 今日更新 ${st.today_update ?? 0}`
-})
 // 三站主页超链接（优先数据源里真实 home，缺省用内置常量兜底）
 const SOURCE_HOMES = {
   sjjzm: 'https://msdn.sjjzm.com/',

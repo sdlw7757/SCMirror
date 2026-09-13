@@ -3,13 +3,12 @@
     <SiteNav />
     <main class="flex-1 w-full">
       <RouterView v-if="store.loaded" />
-      <!-- 首屏加载态 -->
-      <div v-else class="min-h-[60vh] flex flex-col items-center justify-center gap-4 px-6">
-        <div class="relative h-12 w-12">
-          <div class="absolute inset-0 rounded-full border-2 border-cyan-400/30"></div>
-          <div class="absolute inset-0 rounded-full border-2 border-t-cyan-400 animate-spin"></div>
-        </div>
-        <p class="text-sm text-slate-400">数据同步中，请稍候…</p>
+      <!-- 数据就绪前的轻量提示（首屏由 SSR 骨架承载，避免大转圈叠加遮挡） -->
+      <div v-else class="py-2 text-center">
+        <p class="inline-flex items-center gap-2 text-xs text-slate-500">
+          <span class="h-2 w-2 animate-pulse rounded-full bg-cyan-400"></span>
+          数据同步中…
+        </p>
       </div>
     </main>
     <SiteFooter />
