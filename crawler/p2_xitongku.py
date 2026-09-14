@@ -24,6 +24,7 @@ from datetime import datetime
 from . import common
 
 WINDOWS_JSON_URL = "https://www.xitongku.com/data/windows.json"
+OFFICE_JSON_URL = "https://www.xitongku.com/data/office.json"
 LIFECYCLE_API_URL = "https://xtk-api.hipcapi.com/index/windowVersion/list"
 
 FAMILY_RULES = [
@@ -94,8 +95,8 @@ def _leaf_record(n: dict) -> dict | None:
 
     links = []
     primary = ""
-    # 过滤不要抓取的链接类型（U 盘装机/定制系统盘是线下服务项，不属于下载资源）
-    SKIP_KW = ("定制装机U盘", "定制系统盘")
+    # 过滤不要抓取的链接类型（U 盘装机/定制系统盘/购买U盘是线下服务项，不属于下载资源）
+    SKIP_KW = ("定制装机U盘", "定制系统盘", "购买U盘")
     for rk, rv in kws.items():
         if not rv:
             continue
@@ -123,6 +124,25 @@ def _leaf_record(n: dict) -> dict | None:
         "raw_id": n.get("id"),
         "raw_node": n.get("name"),
     }
+
+
+def attach_office_context(items: list[dict]) -> None:
+    """Office 树（office.json）专用上下文：family=年份，归入 Office 大分类（key=other）。"""
+    for it in items:
+        parents = it.pop("_parents", [])
+        names = [p for p in parents if p]
+        version = names[0] if names else ""          # 年份：2024 / 2019 / 2016 …
+        type_ctx = names[1] if len(names) > 1 else ""  # ProPlus / 专业版 / Mac版 …
+        sub = names[2] if len(names) > 2 else ""
+        arch = common.normalize_arch(it["name"]) or common.normalize_arch(" ".join(names[::-1]))
+        itype = "mac" if "mac" in f"{type_ctx} {sub}".lower() else ""
+        title = " ".join(x for x in (f"Office {version}", type_ctx, sub, it["name"]) if x).strip()
+        it["title"] = title
+        it["category_key"] = "other"  # Office 大分类（沿用 key=other）
+        it["version"] = version
+        it["type"] = itype
+        it["arch"] = arch
+        it["month"] = ""
 
 
 def attach_context(items: list[dict]) -> None:
@@ -214,6 +234,15 @@ def crawl() -> dict:
 
     items = walk_tree(tree)
     attach_context(items)
+
+    # Office 版本树（office.json）：结构与 windows.json 一致，归入 Office 大分类
+    otree, oerr = common.http_get_text(OFFICE_JSON_URL, timeout=60, retries=3, as_json=True)
+    if not otree or oerr:
+        warnings.append(f"Office 树抓取失败: {oerr}")
+    else:
+        oitems = walk_tree(otree)
+        attach_office_context(oitems)
+        items.extend(oitems)
 
     life = fetch_lifecycle()
     # 为每条匹配 (system_name, version)

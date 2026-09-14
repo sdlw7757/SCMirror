@@ -35,16 +35,17 @@ def fetch_edition_links() -> list[dict]:
     if not html:
         return out, err
     soup = BeautifulSoup(html, "html.parser")
-    # 左侧导航 <a href="...winXX.html">
+    # 左侧导航 <a href="...winXX.html">（含 office.html → Office 大分类）
     for a in soup.select("a[href]"):
         href = (a.get("href") or "").strip()
-        m = re.search(r"/(win\d+|winxp)\.html$", href)
+        m = re.search(r"/(win\d+|winxp|office)\.html$", href)
         if not m:
             continue
         key = m.group(1)
         cat = {
             "win11": "win11", "win10": "win10", "win81": "win8",
             "win8": "win8", "win7": "win7", "winxp": "winxp",
+            "office": "other",
         }.get(key)
         text = (a.get_text() or "").strip()
         if cat and not any(x["cat"] == cat for x in out):

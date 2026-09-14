@@ -211,6 +211,10 @@ def merge(snapshots: dict[str, dict], existing_db: dict | None) -> dict:
         for rec in snap.get("items", []):
             if not isinstance(rec, dict):
                 continue
+            # 不抓取 Windows Vista 相关镜像（统一排除，标题/文件名含 vista 即跳过）
+            _t = str(rec.get("title") or rec.get("filename") or "").lower()
+            if "vista" in _t:
+                continue
             sha256 = common.norm_hash(rec.get("sha256"))
             sha1 = common.norm_hash(rec.get("sha1"))
             keys = []
@@ -281,7 +285,11 @@ def merge(snapshots: dict[str, dict], existing_db: dict | None) -> dict:
                 aliases[k] = item
 
     # 3) 为每条重新择优计算 meta_unified
-    items = list(items_by_key.values())
+    #    并清除历史遗留的 Windows Vista 条目（已按要求停止收录 Vista）
+    items = [
+        it for it in items_by_key.values()
+        if "vista" not in str((it.get("meta_unified") or {}).get("title") or "").lower()
+    ]
     for item in items:
         item["meta_unified"] = _recompute_meta(item)
 

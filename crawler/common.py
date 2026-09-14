@@ -129,12 +129,13 @@ CATEGORIES = [
     },
     {
         "key": "other",
-        "name": "其他 Windows",
-        "short": "Other",
+        "name": "Office",
+        "short": "Office",
         "intro": (
-            "其他不易归类的 Windows 镜像（如特殊语言/平台版本、开发预览等）暂归此类。"
+            "聚合整理各版本 Microsoft Office 官方原版镜像"
+            "（Office 2003 ~ 2024，含专业版 / 专业增强版 / Mac 版等），来自山己几子木 / 系统库 / HelloWindows。"
         ),
-        "keywords": "Windows 其他版本,Windows 镜像聚合",
+        "keywords": "Office 镜像下载,Office 原版 ISO,Office 2024 下载,Office 2019 专业增强版,Office 2016",
     },
 ]
 
