@@ -154,6 +154,10 @@ CATEGORY_RULES = [
     (["office", "microsoft office"], "office"),
 ]
 
+# 全局过滤的下载链接名关键词（线下服务项，不属于下载资源）。
+# 抓取层（p2）用于跳过产生；合并层（merge）用于统一清洗历史快照残留。
+SKIP_LINK_KW = ("定制装机U盘", "定制系统盘", "购买U盘")
+
 
 # ---------------- 时间工具 ----------------
 BEIJING_TZ = timezone(timedelta(hours=8))

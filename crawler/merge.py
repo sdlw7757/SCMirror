@@ -293,6 +293,18 @@ def merge(snapshots: dict[str, dict], existing_db: dict | None) -> dict:
     for item in items:
         item["meta_unified"] = _recompute_meta(item)
 
+    # 3.5) 统一清洗：所有源快照的 urls 里剔除线下服务类链接（历史快照残留也清掉；
+    #      raw 原始记录按"原样保存"原则不动，前端只读 urls）
+    for it in items:
+        for e in it.get("sources_raw") or []:
+            urls = e.get("urls") or []
+            cleaned = [
+                u for u in urls
+                if not any(kw in str((u or {}).get("name") or "") for kw in common.SKIP_LINK_KW)
+            ]
+            if len(cleaned) != len(urls):
+                e["urls"] = cleaned
+
     # 4) 生成 iso_key（保证唯一、URL 友好）
     used_keys: set[str] = set()
     for item in items:

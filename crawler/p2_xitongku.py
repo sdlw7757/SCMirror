@@ -96,7 +96,7 @@ def _leaf_record(n: dict) -> dict | None:
     links = []
     primary = ""
     # 过滤不要抓取的链接类型（U 盘装机/定制系统盘/购买U盘是线下服务项，不属于下载资源）
-    SKIP_KW = ("定制装机U盘", "定制系统盘", "购买U盘")
+    SKIP_KW = common.SKIP_LINK_KW
     for rk, rv in kws.items():
         if not rv:
             continue
