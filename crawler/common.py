@@ -135,7 +135,7 @@ CATEGORIES = [
             "聚合整理各版本 Microsoft Office 官方原版镜像"
             "（Office 2003 ~ 2024，含专业版 / 专业增强版 / Mac 版等），来自山己几子木 / 系统库 / HelloWindows。"
         ),
-        "keywords": "Office 镜像下载,Office 原版 ISO,Office 2024 下载,Office 2019 专业增强版,Office 2016",
+        "keywords": "Office 2024,Office 2019,Office 2016,Office 2013,Office 2010",
     },
 ]
 
