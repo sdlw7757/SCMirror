@@ -86,7 +86,7 @@
     <!-- 网盘 / 其他地址（点击自动复制对应密码后跳转） -->
     <div class="mt-auto">
       <template v-if="net.length">
-        <p class="mb-2 text-[11px] text-slate-500">网盘地址（{{ net.length }} 项，点击自动复制提取码）</p>
+        <p class="mb-2 text-[11px] text-slate-500">网盘地址（{{ net.length }} 项，点击打开；百度网盘自动填入提取码）</p>
         <div class="grid grid-cols-1 gap-1.5">
           <a
             v-for="(l, i) in net"
@@ -98,7 +98,7 @@
             @click.prevent="goNet(l)"
           >
             <span class="truncate">{{ l.name || linkDisplayName(l.url) }}</span>
-            <span v-if="netPwd(l)" class="shrink-0 text-[10px] text-amber-300/90" title="打开网盘后直接粘贴提取码即可">
+            <span v-if="netPwd(l)" class="shrink-0 text-[10px] text-amber-300/90" title="百度网盘打开即自动填入提取码；其他网盘已复制，粘贴即可">
               🔑 {{ netPwd(l) }}
             </span>
             <span v-else class="ml-1 shrink-0 text-cyan-300/70">↗</span>
@@ -169,12 +169,18 @@ function netPwd(l) {
   const key = n.replace(/地址|链接|下载/g, '').trim()
   return pwdMap.value[key] || ''
 }
-// 点击网盘链接：先复制对应密码到剪贴板，再打开网盘
+// 点击网盘链接：百度网盘自动带 ?pwd= 打开（官方参数，打开即自动填入提取码）；
+// 其他网盘仍走「复制提取码后打开」，打开后直接粘贴即可
 async function goNet(l) {
   if (!l || !l.url) return
   const pwd = netPwd(l)
-  if (pwd) await copyText(pwd)
-  window.open(l.url, '_blank', 'noopener,noreferrer')
+  let url = l.url
+  if (pwd && /pan\.baidu\.com/i.test(url)) {
+    url += (url.includes('?') ? '&' : '?') + 'pwd=' + encodeURIComponent(String(pwd).trim())
+  } else if (pwd) {
+    await copyText(pwd)
+  }
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 // 网盘 / 其他 http 地址（排除密码项）
 const net = computed(() =>

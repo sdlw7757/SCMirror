@@ -23,6 +23,11 @@ const routes = [
     component: () => import('../views/CategoryView.vue'),
     meta: { title: (to) => '' },
   },
+  // 旧链兼容：/category/other（原“其他 Windows”分类，已更名为 Office）301 到 office
+  {
+    path: '/category/other',
+    redirect: '/category/office',
+  },
   {
     path: '/detail/:isoKey',
     name: 'detail',

@@ -45,7 +45,7 @@ def fetch_edition_links() -> list[dict]:
         cat = {
             "win11": "win11", "win10": "win10", "win81": "win8",
             "win8": "win8", "win7": "win7", "winxp": "winxp",
-            "office": "other",
+            "office": "office",
         }.get(key)
         text = (a.get_text() or "").strip()
         if cat and not any(x["cat"] == cat for x in out):

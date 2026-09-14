@@ -128,14 +128,14 @@ CATEGORIES = [
         "keywords": "Windows Server 下载,Server 2025 镜像,Server 2022 ISO,Windows Server 原版",
     },
     {
-        "key": "other",
+        "key": "office",
         "name": "Office",
         "short": "Office",
         "intro": (
             "聚合整理各版本 Microsoft Office 官方原版镜像"
             "（Office 2003 ~ 2024，含专业版 / 专业增强版 / Mac 版等），来自山己几子木 / 系统库 / HelloWindows。"
         ),
-        "keywords": "Office 2024,Office 2019,Office 2016,Office 2013,Office 2010",
+        "keywords": "Office 2024,Office 2019,Office 2016,Office 2013,Office 2010,Office 2007,Office 2003",
     },
 ]
 
@@ -151,6 +151,7 @@ CATEGORY_RULES = [
     (["win7", "windows 7", "windows7"], "win7"),
     (["winxp", "windows xp", "windowsxp"], "winxp"),
     (["server"], "server"),
+    (["office", "microsoft office"], "office"),
 ]
 
 

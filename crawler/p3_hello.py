@@ -120,11 +120,12 @@ def detect_category(cat_text: str) -> str:
         (["win7", "windows7"], "win7"),
         (["winxp", "windowsxp"], "winxp"),
         (["server"], "server"),
+        (["office"], "office"),
     ]
     for keys, cat in rules:
         if any(k in t for k in keys):
             return cat
-    return "other"
+    return "office"
 
 
 def crawl() -> dict:

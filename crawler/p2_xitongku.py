@@ -43,7 +43,7 @@ def detect_category(text: str) -> tuple[str, str]:
     for cat, keys, sysname in FAMILY_RULES:
         if any(k in t for k in keys):
             return cat, sysname
-    return "other", text
+    return "office", text
 
 
 def walk_tree(nodes, parents=()) -> list[dict]:
@@ -127,7 +127,7 @@ def _leaf_record(n: dict) -> dict | None:
 
 
 def attach_office_context(items: list[dict]) -> None:
-    """Office 树（office.json）专用上下文：family=年份，归入 Office 大分类（key=other）。"""
+    """Office 树（office.json）专用上下文：family=年份，归入 Office 大分类（key=office）。"""
     for it in items:
         parents = it.pop("_parents", [])
         names = [p for p in parents if p]
@@ -138,7 +138,7 @@ def attach_office_context(items: list[dict]) -> None:
         itype = "mac" if "mac" in f"{type_ctx} {sub}".lower() else ""
         title = " ".join(x for x in (f"Office {version}", type_ctx, sub, it["name"]) if x).strip()
         it["title"] = title
-        it["category_key"] = "other"  # Office 大分类（沿用 key=other）
+        it["category_key"] = "office"
         it["version"] = version
         it["type"] = itype
         it["arch"] = arch

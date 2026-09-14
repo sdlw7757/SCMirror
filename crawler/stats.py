@@ -18,7 +18,7 @@ def compute_stats(items: list[dict], last_sync: str | None = None) -> dict:
 
     all_crawled = []
     for it in items:
-        ck = it.get("category_key", "other")
+        ck = it.get("category_key", "office")
         by_category[ck] = by_category.get(ck, 0) + 1
         if it.get("first_seen") == today:
             today_new += 1

@@ -114,7 +114,7 @@ def detect_category(rec_or_text: dict | str) -> str:
     """对原始记录或字符串做分类检测。rec 带 category_key 时优先使用。"""
     if isinstance(rec_or_text, dict):
         ck = rec_or_text.get("category_key") or ""
-        if ck in common.CATEGORY_KEYS and ck != "other":
+        if ck in common.CATEGORY_KEYS:
             return ck
         text = " ".join([
             str(rec_or_text.get("title", "")),
@@ -129,7 +129,7 @@ def detect_category(rec_or_text: dict | str) -> str:
             return cat
         if any(k.replace(" ", "") in t for k in keys):
             return cat
-    return "other"
+    return "office"
 
 
 def normalize_arch(rec: dict) -> str:
@@ -144,7 +144,7 @@ def _type_label(t: str) -> str:
 
 
 def build_iso_key(meta: dict, key: str) -> str:
-    cat = meta.get("category_key", "other")
+    cat = meta.get("category_key", "office")
     ver = common.slugify(meta.get("version", "")) or "v"
     arch = meta.get("arch", "x64") or "x64"
     typ = meta.get("type", "") or "ed"
@@ -347,7 +347,7 @@ def merge(snapshots: dict[str, dict], existing_db: dict | None) -> dict:
 def _recompute_meta(item: dict) -> dict:
     entries = item["sources_raw"]
     if not entries:
-        return {"category_key": "other"}
+        return {"category_key": "office"}
 
     # 择优顺序（与需求一致）
     TITLE_PRI = common.TITLE_PRIORITY
@@ -390,13 +390,13 @@ def _recompute_meta(item: dict) -> dict:
             arch = a
             break
 
-    category_key = "other"
+    category_key = ""
     for e in entries:
         ck = _candidate(e).get("category_key", "") or ""
-        if ck and ck != "other":
+        if ck in common.CATEGORY_KEYS:
             category_key = ck
             break
-    if category_key == "other":
+    if not category_key:
         category_key = detect_category(entries[0].get("raw") or {})
 
     meta = {
