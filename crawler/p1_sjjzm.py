@@ -209,8 +209,9 @@ def crawl() -> dict:
             warnings.append(f"抓取失败 {entry['url']}: {e1}")
             continue
         boxes = extract_boxes(page_html)
-        if not boxes:
-            # 回退：抓版本子页
+        # office 分类页只内嵌最新版本(2024)的 box，其余版本(2021/2019)在版本子页 → 始终抓子页
+        if not boxes or entry["cat"] == "office":
+            # 回退/补全：抓版本子页
             for sub in fetch_version_subpages(entry["page"]):
                 sub_html, e2 = common.http_get_text(sub)
                 if not sub_html:
