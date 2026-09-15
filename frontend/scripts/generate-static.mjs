@@ -154,7 +154,7 @@ function homeSSR(db) {
   <p class="ssr-more"><a href="${SITE.url}/tool-hash">哈希校验工具</a> · <a href="${SITE.url}/wiki">知识库</a></p>
 </section>`
   return {
-    title: `${SITE.name} - 多源 Windows 原版镜像聚合查询 | ${SITE.name_en}`,
+    title: `${SITE.name} - 微软原版系统镜像站 | ${SITE.name_en}`,
     description: `${SITE.name}（${SITE.name_en}）聚合整理山己几子木、系统库、HelloWindows 三站 Windows 官方原版镜像元信息，以 SHA256 为主键统一聚合。`,
     body,
     url: `${SITE.url}/`,

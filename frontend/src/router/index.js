@@ -15,7 +15,7 @@ const routes = [
     path: '/',
     name: 'home',
     component: () => import('../views/HomeView.vue'),
-    meta: { title: `${SITE_CONFIG.name} - 多源 Windows 原版镜像聚合查询` },
+    meta: { title: `${SITE_CONFIG.name} - 微软原版系统镜像站` },
   },
   {
     path: '/category/:categoryKey',
