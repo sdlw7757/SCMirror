@@ -139,7 +139,7 @@ function homeSSR(db) {
   const cards = items.map((it) => card(it, db)).join('\n')
   const body = `<header class="ssr-head">
   <h1>${esc(SITE.name)} · ${esc(SITE.name_en)}</h1>
-  <p>多源 Windows 官方原版镜像聚合查询：以 SHA256 为主键聚合山己几子木 / 系统库 / HelloWindows 三站元信息。</p>
+  <p>微软原版系统镜像站：以 SHA256 为主键聚合三站镜像元数据，保留原始信息，纯净无捆绑，提供 Windows / Office 原版镜像及 SHA 校验码。</p>
   <div class="ssr-stats">
     <span>总收录 <b>${esc(st.total ?? 0)}</b></span>
     <span>今日新增 <b>${esc(st.today_new ?? 0)}</b></span>

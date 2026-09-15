@@ -11,13 +11,12 @@
         <h1 class="text-3xl font-extrabold tracking-tight md:text-5xl">
           <span class="glow-text">{{ site.name }}</span>
           <span class="mt-2 block text-xl font-semibold text-slate-300 md:text-2xl">
-            多源 Windows 原版镜像聚合查询
+            微软原版系统镜像站
           </span>
         </h1>
         <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-400 md:text-base">
-          以 <span class="font-mono text-cyan-300">SHA256</span> 为唯一主键，聚合
-          山己几子木 / 系统库 / HelloWindows 三站元信息，一站一条原始数据独立保留，
-          支持模糊搜索、多维度筛选与原版镜像校验。
+          以 <span class="font-mono text-cyan-300">SHA256</span> 为主键聚合三站镜像元数据，保留原始信息，
+          支持检索筛选与校验，纯净无捆绑，提供 Windows / Office 原版镜像及 SHA 校验码。
         </p>
       </div>
     </section>
