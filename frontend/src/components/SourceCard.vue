@@ -86,7 +86,7 @@
     <!-- 网盘 / 其他地址（点击自动复制对应密码后跳转） -->
     <div class="mt-auto">
       <template v-if="net.length">
-        <p class="mb-2 text-[11px] text-slate-500">网盘地址（{{ net.length }} 项，点击打开；百度/天翼/迅雷自动填入提取码）</p>
+        <p class="mb-2 text-[11px] text-slate-500">网盘地址（{{ net.length }} 项，点击打开；百度/迅雷自动填码，其余复制访问码）</p>
         <div class="grid grid-cols-1 gap-1.5">
           <a
             v-for="(l, i) in net"
@@ -98,7 +98,7 @@
             @click.prevent="goNet(l)"
           >
             <span class="truncate">{{ l.name || linkDisplayName(l.url) }}</span>
-            <span v-if="netPwd(l)" class="shrink-0 text-[10px] text-amber-300/90" title="百度/天翼/迅雷云盘打开即自动填入提取码；其他网盘已复制，粘贴即可">
+            <span v-if="netPwd(l)" class="shrink-0 text-[10px] text-amber-300/90" title="百度/迅雷云盘打开即自动填码；天翼等网盘点击时已复制访问码，粘贴即可">
               🔑 {{ netPwd(l) }}
             </span>
             <span v-else class="ml-1 shrink-0 text-cyan-300/70">↗</span>
@@ -116,6 +116,16 @@
         <span class="ml-2 shrink-0 text-cyan-300/70">↗</span>
       </a>
     </div>
+
+    <!-- 访问码复制提示 -->
+    <transition name="toast-fade">
+      <div
+        v-if="toast"
+        class="fixed bottom-16 left-1/2 z-50 -translate-x-1/2 rounded-lg border border-cyan-400/40 bg-ink-900/95 px-4 py-2 text-xs text-cyan-200 shadow-lg"
+      >
+        {{ toast }}
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -169,11 +179,12 @@ function netPwd(l) {
   const key = n.replace(/地址|链接|下载/g, '').trim()
   return pwdMap.value[key] || ''
 }
-// 支持自动填码的网盘及对应 URL 参数（打开即自动填入提取码）：
-// 百度网盘 ?pwd=（官方参数）；天翼云盘 ?code=；迅雷云盘 ?pwd=（源站链接常已自带，兜底）
+// 支持打开即自动填码的网盘及对应 URL 参数（实测有效）：
+// 百度网盘 ?pwd=（官方）；迅雷云盘 ?pwd=（源站链接常已自带，兜底补齐）。
+// 天翼/移动/阿里/微云经实测（含官方 App 分享的「（访问码:x）」格式）网页端均不支持
+// URL 自动填码 → 点击时复制访问码并弹出明确提示，打开后粘贴即可。
 const PWD_PARAM_RULES = [
   [/pan\.baidu\.com/i, 'pwd'],
-  [/cloud\.189\.cn/i, 'code'],
   [/pan\.xunlei\.com/i, 'pwd'],
 ]
 async function goNet(l) {
@@ -185,12 +196,21 @@ async function goNet(l) {
     const already = /[?&](?:pwd|code)=/.test(url)
     if (rule && !already) {
       url += (url.includes('?') ? '&' : '?') + rule[1] + '=' + encodeURIComponent(String(pwd).trim())
-    } else if (!rule) {
-      // 不支持自动填码的网盘（移动云盘/阿里云盘/微云等）：复制提取码，打开后粘贴
+    } else if (!rule || already) {
+      // 无自动填码参数的网盘：复制访问码并明确提示
       await copyText(pwd)
+      showToast(`已复制访问码 ${pwd}，打开后粘贴即可`)
     }
   }
   window.open(url, '_blank', 'noopener,noreferrer')
+}
+// 轻提示
+const toast = ref('')
+let toastTimer = null
+function showToast(msg) {
+  toast.value = msg
+  clearTimeout(toastTimer)
+  toastTimer = setTimeout(() => (toast.value = ''), 2600)
 }
 // 网盘 / 其他 http 地址（排除密码项）
 const net = computed(() =>
@@ -259,5 +279,14 @@ button.hashvalue.md5:hover {
 .copyicon {
   font-size: 12px;
   opacity: 0.6;
+}
+.toast-fade-enter-active,
+.toast-fade-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.toast-fade-enter-from,
+.toast-fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, 8px);
 }
 </style>
