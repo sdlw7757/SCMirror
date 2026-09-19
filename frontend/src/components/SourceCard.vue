@@ -117,15 +117,17 @@
       </a>
     </div>
 
-    <!-- 访问码复制提示 -->
-    <transition name="toast-fade">
-      <div
-        v-if="toast"
-        class="fixed bottom-16 left-1/2 z-50 -translate-x-1/2 rounded-lg border border-cyan-400/40 bg-ink-900/95 px-4 py-2 text-xs text-cyan-200 shadow-lg"
-      >
-        {{ toast }}
-      </div>
-    </transition>
+    <!-- 访问码复制提示（Teleport 到 body：脱离卡片 backdrop-filter 创建的包含块，固定到视口底部） -->
+    <Teleport to="body">
+      <transition name="toast-fade">
+        <div
+          v-if="toast"
+          class="pointer-events-none fixed bottom-16 left-1/2 z-[60] -translate-x-1/2 rounded-lg border border-cyan-400/40 bg-ink-900/95 px-4 py-2 text-xs text-cyan-200 shadow-lg"
+        >
+          {{ toast }}
+        </div>
+      </transition>
+    </Teleport>
   </div>
 </template>
 
