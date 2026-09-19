@@ -86,7 +86,7 @@
     <!-- 网盘 / 其他地址（点击自动复制对应密码后跳转） -->
     <div class="mt-auto">
       <template v-if="net.length">
-        <p class="mb-2 text-[11px] text-slate-500">网盘地址（{{ net.length }} 项，点击打开；百度网盘自动填入提取码）</p>
+        <p class="mb-2 text-[11px] text-slate-500">网盘地址（{{ net.length }} 项，点击打开；百度/天翼/迅雷自动填入提取码）</p>
         <div class="grid grid-cols-1 gap-1.5">
           <a
             v-for="(l, i) in net"
@@ -98,7 +98,7 @@
             @click.prevent="goNet(l)"
           >
             <span class="truncate">{{ l.name || linkDisplayName(l.url) }}</span>
-            <span v-if="netPwd(l)" class="shrink-0 text-[10px] text-amber-300/90" title="百度网盘打开即自动填入提取码；其他网盘已复制，粘贴即可">
+            <span v-if="netPwd(l)" class="shrink-0 text-[10px] text-amber-300/90" title="百度/天翼/迅雷云盘打开即自动填入提取码；其他网盘已复制，粘贴即可">
               🔑 {{ netPwd(l) }}
             </span>
             <span v-else class="ml-1 shrink-0 text-cyan-300/70">↗</span>
@@ -169,16 +169,26 @@ function netPwd(l) {
   const key = n.replace(/地址|链接|下载/g, '').trim()
   return pwdMap.value[key] || ''
 }
-// 点击网盘链接：百度网盘自动带 ?pwd= 打开（官方参数，打开即自动填入提取码）；
-// 其他网盘仍走「复制提取码后打开」，打开后直接粘贴即可
+// 支持自动填码的网盘及对应 URL 参数（打开即自动填入提取码）：
+// 百度网盘 ?pwd=（官方参数）；天翼云盘 ?code=；迅雷云盘 ?pwd=（源站链接常已自带，兜底）
+const PWD_PARAM_RULES = [
+  [/pan\.baidu\.com/i, 'pwd'],
+  [/cloud\.189\.cn/i, 'code'],
+  [/pan\.xunlei\.com/i, 'pwd'],
+]
 async function goNet(l) {
   if (!l || !l.url) return
   const pwd = netPwd(l)
   let url = l.url
-  if (pwd && /pan\.baidu\.com/i.test(url)) {
-    url += (url.includes('?') ? '&' : '?') + 'pwd=' + encodeURIComponent(String(pwd).trim())
-  } else if (pwd) {
-    await copyText(pwd)
+  if (pwd) {
+    const rule = PWD_PARAM_RULES.find(([re]) => re.test(url))
+    const already = /[?&](?:pwd|code)=/.test(url)
+    if (rule && !already) {
+      url += (url.includes('?') ? '&' : '?') + rule[1] + '=' + encodeURIComponent(String(pwd).trim())
+    } else if (!rule) {
+      // 不支持自动填码的网盘（移动云盘/阿里云盘/微云等）：复制提取码，打开后粘贴
+      await copyText(pwd)
+    }
   }
   window.open(url, '_blank', 'noopener,noreferrer')
 }
