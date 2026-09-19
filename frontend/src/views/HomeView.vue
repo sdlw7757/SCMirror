@@ -25,7 +25,7 @@
     <DataStatus class="mb-4" />
 
     <!-- 统计双看板 -->
-    <StatBoard class="mb-6" />
+    <StatBoard class="mb-6" @today="onToday" />
 
     <!-- 搜索 -->
     <div class="mb-4">
@@ -38,12 +38,23 @@
     </div>
 
     <!-- 结果统计 -->
-    <div class="mb-3 flex items-center justify-between gap-2">
+    <div id="mirror-list" class="mb-3 flex flex-wrap items-center justify-between gap-2 scroll-mt-20">
       <h2 class="flex items-center gap-2 text-base font-semibold text-slate-100">
         <span class="h-4 w-1 rounded bg-cyan-400"></span>
         镜像列表
       </h2>
-      <span class="text-xs text-slate-500">共 {{ listed.length }} 条</span>
+      <div class="flex items-center gap-2">
+        <button
+          v-if="todayOnly"
+          type="button"
+          class="inline-flex items-center gap-1 rounded-md border border-cyan-400/40 bg-cyan-500/10 px-2 py-0.5 text-xs text-cyan-300 transition hover:bg-cyan-500/20"
+          title="清除“今日新增”筛选"
+          @click="todayOnly = false"
+        >
+          今日新增 ✕
+        </button>
+        <span class="text-xs text-slate-500">共 {{ listed.length }} 条</span>
+      </div>
     </div>
 
     <!-- 列表（默认精简展示，可“加载更多”） -->
@@ -81,6 +92,17 @@ import SearchBox from '../components/SearchBox.vue'
 import FilterBar from '../components/FilterBar.vue'
 import IsoCard from '../components/IsoCard.vue'
 
+// 今日新增视图：由 StatBoard“今日新增”卡片点击触发，过滤 first_seen=今天 的镜像
+const todayOnly = ref(false)
+const today = computed(() => (store.data?.stats?.last_sync || '').slice(0, 10))
+function onToday() {
+  todayOnly.value = true
+  // 滚动到镜像列表
+  requestAnimationFrame(() => {
+    document.getElementById('mirror-list')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
+}
+
 const site = computed(() => store.data?.site || { name: '海云镜像' })
 const query = ref('')
 const filters = ref({ category: 'all', arch: 'all', type: 'all', lifecycle: 'all' })
@@ -96,7 +118,10 @@ const PAGE_INIT = 12
 const PAGE_STEP = 24
 const visible = ref(PAGE_INIT)
 const listed = computed(() => {
-  const all = store.data?.items || []
+  let all = store.data?.items || []
+  if (todayOnly.value) {
+    all = all.filter((it) => it.first_seen === today.value)
+  }
   const filtered = applyFilters(all, filters.value)
   return fuzzyFilter(filtered, query.value, categoryName)
 })

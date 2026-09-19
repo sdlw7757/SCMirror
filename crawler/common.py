@@ -209,10 +209,14 @@ def http_get_text(
     import requests
     # 礼貌限速：每次请求前随机小间隔，避免高频抓取触发目标站限流
     time.sleep(random.uniform(0.15, 0.4))
+    # trust_env=False：忽略系统/环境代理设置，直连目标站
+    # （本机代理挂掉会让所有请求 ProxyError；CI 上无代理，不受影响）
+    sess = requests.Session()
+    sess.trust_env = False
     err = None
     for attempt in range(1, retries + 1):
         try:
-            resp = requests.get(
+            resp = sess.get(
                 url,
                 headers=headers or DEFAULT_HEADERS,
                 timeout=timeout,
