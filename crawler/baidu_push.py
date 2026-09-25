@@ -96,9 +96,11 @@ class BaiduPusher:
         url = f"{API}?site={self.site}&token={self.token}"
         body = "\n".join(batch)
         last_err = None
+        sess = requests.Session()
+        sess.trust_env = False  # 忽略系统/环境代理，避免本机代理故障导致推送失败
         for attempt in range(1, 4):  # 单批重试（指数退避），提升弱网环境推送成功率
             try:
-                r = requests.post(
+                r = sess.post(
                     url,
                     data=body.encode("utf-8"),
                     headers={"Content-Type": "text/plain", "User-Agent": common.DEFAULT_HEADERS["User-Agent"]},

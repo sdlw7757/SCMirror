@@ -41,6 +41,7 @@ jobs:
 
       - name: Run crawler pipeline
         env:
+          SITE_URL: https://${{ github.event.repository.owner.login }}.github.io/${{ github.event.repository.name }}
           BAIDU_SITE: ${{ secrets.BAIDU_SITE }}
           BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
         run: |
@@ -55,6 +56,22 @@ jobs:
           s = d['stats']
           print('total:', s['total'], 'today_new:', s['today_new'], 'today_update:', s['today_update'], 'last_sync:', s['last_sync'])
           EOF
+          echo "== baidu push config =="
+          if [ -n "$BAIDU_SITE" ] && [ -n "$BAIDU_TOKEN" ]; then
+            echo "BAIDU_SITE/BAIDU_TOKEN: 已配置"
+          else
+            echo "WARN: BAIDU_SITE 或 BAIDU_TOKEN 未配置 —— 百度推送将被跳过（不会生成 .baidu_push_state.json）"
+          fi
+          echo "SITE_URL: $SITE_URL"
+          if [ -f data/.baidu_push_state.json ]; then
+            echo "推送状态文件: 存在 ($(python -c "import json;print(len(json.load(open('data/.baidu_push_state.json'))['pushed']))") 条已推送)"
+          else
+            echo "推送状态文件: 不存在"
+          fi
+        env:
+          SITE_URL: https://${{ github.event.repository.owner.login }}.github.io/${{ github.event.repository.name }}
+          BAIDU_SITE: ${{ secrets.BAIDU_SITE }}
+          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
 
       - name: Commit & push (if changed)
         run: |
