@@ -41,7 +41,8 @@ jobs:
 
       - name: Run crawler pipeline
         env:
-          SITE_URL: https://${{ github.event.repository.owner.login }}.github.io/${{ github.event.repository.name }}
+          # 真实域名：与百度注册站点（BAIDU_SITE）保持一致，保证 sitemap/robots 与推送都用同一域名
+          SITE_URL: ${{ secrets.BAIDU_SITE }}
           BAIDU_SITE: ${{ secrets.BAIDU_SITE }}
           BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
         run: |
@@ -69,7 +70,7 @@ jobs:
             echo "推送状态文件: 不存在"
           fi
         env:
-          SITE_URL: https://${{ github.event.repository.owner.login }}.github.io/${{ github.event.repository.name }}
+          SITE_URL: ${{ secrets.BAIDU_SITE }}
           BAIDU_SITE: ${{ secrets.BAIDU_SITE }}
           BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
 
