@@ -25,6 +25,10 @@ API = "http://data.zz.baidu.com/urls"
 PUSH_STATE = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", ".baidu_push_state.json"
 )
+# 推送失败详情：写入仓库 data/，由 CI 自动提交，方便直接查看失败原因
+PUSH_ERROR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", ".baidu_push_error.json"
+)
 
 
 class BaiduPusher:
@@ -73,11 +77,13 @@ class BaiduPusher:
         total_ok = 0
         # 分组推送，每批 ≤ 1000 条
         ok_all = True
+        last_fail = None
         for i in range(0, len(incremental), 1000):
             batch = incremental[i : i + 1000]
             resp = self._post_batch(batch)
             if not resp.get("ok"):
                 ok_all = False
+                last_fail = resp
                 break
             total_ok += resp.get("success", 0)
             # 成功后更新状态并立即持久化（避免部分批次失败时已成功批次丢失而重复推送）
@@ -85,9 +91,23 @@ class BaiduPusher:
                 pushed[loc] = next((u["lastmod"] for u in urls if u["loc"] == loc), today)
             self._save_state(pushed)
 
+        if not ok_all:
+            # 失败详情落盘到仓库 data/（CI 自动提交），方便直接查看原因
+            common.write_json(PUSH_ERROR, {
+                "time": common.now_str(),
+                "reason": (last_fail or {}).get("reason") or "未知错误",
+                "detail": {k: v for k, v in (last_fail or {}).items() if k not in ("reason",)},
+            })
+        else:
+            try:
+                os.remove(PUSH_ERROR)
+            except OSError:
+                pass
+
         return {
             "ok": ok_all,
-            "reason": f"推送 {total_ok}/{len(incremental)} 条 URL" if not ok_all else f"全部推送成功 {total_ok} 条 URL",
+            "reason": (f"推送 {total_ok}/{len(incremental)} 条 URL；失败: {(last_fail or {}).get('reason') or '-'}"
+                       if not ok_all else f"全部推送成功 {total_ok} 条 URL"),
             "pushed": total_ok,
             "debug": incremental[:5],
         }
@@ -109,6 +129,7 @@ class BaiduPusher:
                 data = r.json()
                 return {
                     "ok": r.status_code == 200,
+                    "status": r.status_code,
                     "success": data.get("success", 0),
                     "remain": data.get("remain", 0),
                     **data,
