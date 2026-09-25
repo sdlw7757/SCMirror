@@ -88,9 +88,26 @@ SCMirror/
 
 本项目**不固定域名**（不与某个网址绑定）：
 
-- **爬虫 sitemap / robots**：环境变量 `SITE_URL` 提供绝对域名；未配置自动用**相对路径**，换域名仅需改这个值，代码零改动。
+- **爬虫 sitemap / robots**：环境变量 `SITE_URL` 提供绝对域名；未配置自动用**相对路径**。
 - **前端页面**：运行时自动取当前访问域名（`window.location.origin`）。
-- **百度推送**：site 由环境变量 `BAIDU_SITE` 提供（建议与 `SITE_URL` 一致）。
+- **百度推送**：site 由环境变量 `BAIDU_SITE` 提供。
+
+### 🔁 换域名：只需改一个 Secret
+
+在 CI 工作流（`.github/workflows/crawl.yml`）中，**`SITE_URL` 与 `BAIDU_SITE` 都取自同一个 GitHub Secret `BAIDU_SITE`**（如 `https://517757.xyz`）：
+
+```yaml
+SITE_URL:   ${{ secrets.BAIDU_SITE }}
+BAIDU_SITE: ${{ secrets.BAIDU_SITE }}
+```
+
+因此**换域名时，只需在仓库 Settings → Secrets → Actions 里把 `BAIDU_SITE` 改成新的完整地址**（如 `https://新域名.com`），代码零改动，sitemap / robots / 百度推送会全部自动跟随新域名。
+
+> 注意：`517757.xyz` **没有写死在代码里**。仓库里出现的 `517757.xyz` 只存在于两处构建/运行时产物，非配置来源：
+> - `frontend/public/robots.txt`、`frontend/public/sitemap.xml` —— 上次生成时的静态快照，换域名后下次 `crawl.yml` 运行会自动用新域名重新生成；
+> - `crawler/baidu_push.py` 的错误提示文案里的示例（"如 `https://517757.xyz`"），不影响逻辑。
+
+**换域名后建议**：将 `data/.baidu_push_state.json` 重置为空 `{"pushed":{}}`（或删除），因为它记录的是旧域名的 URL，避免旧记录囤积；新域名 URL 会被视为首次全量重新推送。
 
 ## 🚀 部署
 
@@ -121,7 +138,13 @@ SCMirror/
 
 接口：`http://data.zz.baidu.com/urls?site=<site>&token=<token>`
 
-在仓库 Secrets 配置 `BAIDU_SITE`（你的实际域名，如 `https://你的域名`）与 `BAIDU_TOKEN`。crawler 每次推送增量（详情页 + 分类页），首次自动全量。也可在本地通过环境变量直接触发。
+在仓库 Secrets 配置 `BAIDU_SITE`（你的实际完整域名，如 `https://517757.xyz`）与 `BAIDU_TOKEN`。也可在本地通过环境变量直接触发。
+
+推送策略（`crawler/baidu_push.py`）：
+- **核心导航页每次必推且优先**：主页 `/`、`/tool-hash`（哈希工具）、`/wiki`（知识库）、全部系统分类页（win11/win10/win8/win7/winxp/server/office）单独优先批次发送，即使详情页因每日配额（`over quota`）失败，核心页也已成功提交。
+- **详情页增量**：本轮新增或内容变化（lastmod 变化）时补推。
+- 推送 base **优先取 `BAIDU_SITE`**（必须与百度注册站点域名一致，否则百度归属校验不过而不记录），状态文件 `data/.baidu_push_state.json` 记录已推送 URL 与其 lastmod，避免重复消耗额度。
+- 失败原因（含 `over quota`）会写入 `data/.baidu_push_error.json` 由 CI 自动提交，方便排查。
 
 ## 📄 License
 
