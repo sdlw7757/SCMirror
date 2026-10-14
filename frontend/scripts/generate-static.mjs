@@ -83,6 +83,20 @@ function wrap(title, description, body, url) {
 <meta name="description" content="${esc(description)}" />
 <link rel="canonical" href="${esc(url)}" />
 ${HEAD_ASSETS}
+<!-- 百度普通收录 - 自动推送：用户访问时将该页 URL 实时提交给百度 -->
+<script>
+(function () {
+  var bp = document.createElement('script')
+  var curProtocol = window.location.protocol.split(':')[0]
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+  } else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+  }
+  var s = document.getElementsByTagName('script')[0]
+  s.parentNode.insertBefore(bp, s)
+})()
+</script>
 </head>
 <body>
 <!-- 服务端静态内容（含静态 footer）：SPA 挂载后整块隐藏，避免与 Vue 页脚重复 -->

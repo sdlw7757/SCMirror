@@ -146,16 +146,35 @@ def main() -> None:
             print(f"[!] sitemap 生成失败（不影响已写入的 DB）: {type(e).__name__}: {e}")
 
     if not args.skip_baidu:
+        # 普通收录 - sitemap 提交（主路径）：不消耗主动推送配额，百度定期抓取全站
         try:
-            ret = baidu_push.push_incremental(
-                db["items"],
-                db["categories"],
-                site=os.environ.get("BAIDU_SITE"),
-                token=os.environ.get("BAIDU_TOKEN"),
-            )
-            print(f"== 百度推送: {ret.get('reason')} ==")
+            site_v = (os.environ.get("BAIDU_SITE") or "").strip().rstrip("/")
+            base = baidu_push._normalize_site(site_v) or (common.SITE_URL or "").strip().rstrip("/")
+            if base:
+                ret = baidu_push.submit_sitemap(
+                    sitemap_url=f"{base}/sitemap.xml",
+                    site=os.environ.get("BAIDU_SITE"),
+                    token=os.environ.get("BAIDU_TOKEN"),
+                )
+                print(f"== 百度 sitemap 提交: {ret.get('reason')} ==")
+            else:
+                print("[!] 百度 sitemap 提交跳过：缺少站点 base（BAIDU_SITE 未配置）")
         except Exception as e:  # noqa: BLE001
-            print(f"[!] 百度推送失败（不影响已写入的 DB）: {type(e).__name__}: {e}")
+            print(f"[!] 百度 sitemap 提交失败（不影响已写入的 DB）: {type(e).__name__}: {e}")
+
+        # 可选：核心导航页主动推送（少量，配额内安全），默认开启
+        if os.environ.get("BAIDU_PUSH_CORE", "1") != "0":
+            try:
+                ret = baidu_push.push_incremental(
+                    db["items"],
+                    db["categories"],
+                    site=os.environ.get("BAIDU_SITE"),
+                    token=os.environ.get("BAIDU_TOKEN"),
+                    core_only=True,
+                )
+                print(f"== 百度核心页推送: {ret.get('reason')} ==")
+            except Exception as e:  # noqa: BLE001
+                print(f"[!] 百度核心页推送失败（不影响已写入的 DB）: {type(e).__name__}: {e}")
 
     print("\n===== 完成 =====")
 

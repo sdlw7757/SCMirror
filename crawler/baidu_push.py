@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-baidu_push.py —— 百度收录主动推送（增量）
-- 推送接口：POST http://data.zz.baidu.com/urls?site=<site>&token=<token>
-- 内容：每行一个 URL，单次不超过 2000 条。
-- 策略：
-    * 核心导航页（主页 /、/tool-hash、/wiki、全部分类页每次必推）单独优先批次，
-      保证即使详情页配额（over quota）失败，主页/工具/知识库/分类页也已被提交。
-    * 详情页增量：本轮新增（first_seen==today）或内容变化（lastmod 变化）时补推。
-    * 状态文件（data/.baidu_push_state.json）记录已推送 URL 与其 lastmod，避免重复消耗配额。
-- 推送 base 必须与百度注册站点（BAIDU_SITE）域名一致。
+baidu_push.py —— 百度收录（普通收录）提交
+- sitemap 提交：POST http://data.zz.baidu.com/sitemap?site=<site>&token=<token>
+    请求体为 sitemap 的完整 URL（一行）。百度按自身频率抓取 sitemap 收录全站 URL，
+    不消耗“主动推送”的每日条数配额，避免详情页超配额（over quota）死循环。
+- 主动推送（可选保留）：POST http://data.zz.baidu.com/urls?site=<site>&token=<token>
+    用于向百度快速提交少量核心导航页（主页/工具/知识库/分类页），配额内安全。
+- 配合前端每页注入的百度自动推送 JS（zz.bdstatic.com/linksubmit/push.js），
+  用户访问时实时提交页面，形成 sitemap + 自动推送的完整普通收录闭环。
+- sitemap base 必须与百度注册站点（BAIDU_SITE）域名一致。
 """
 from __future__ import annotations
 
@@ -23,6 +23,7 @@ import requests
 from . import common
 
 API = "http://data.zz.baidu.com/urls"
+SITEMAP_API = "http://data.zz.baidu.com/sitemap"
 PUSH_STATE = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", ".baidu_push_state.json"
 )
@@ -239,7 +240,7 @@ def build_push_urls(items: list[dict], categories: list[dict], base: str = "", c
     return urls
 
 
-def push_incremental(items: list[dict], categories: list[dict], site=None, token=None, base=None) -> dict:
+def push_incremental(items: list[dict], categories: list[dict], site=None, token=None, base=None, core_only: bool = False) -> dict:
     pusher = BaiduPusher(site, token)
     # 推送 base 必须与百度注册的站点（BAIDU_SITE）域名保持一致，否则百度无法归属校验。
     # 这里优先取 BAIDU_SITE；仅当其缺失/为裸域名时才回退到 SITE_URL。
@@ -250,8 +251,67 @@ def push_incremental(items: list[dict], categories: list[dict], site=None, token
     if not base:
         # 站点 base 缺失是配置错误（BAIDU_SITE 未配或不是合法域名），不能谎报“无增量”。
         return {"ok": False, "reason": "推送 base 为空：请配置 BAIDU_SITE（如 https://517757.xyz）", "pushed": 0}
-    urls = build_push_urls(items, categories, base)
+    urls = build_push_urls(items, categories, base, core_only=core_only)
     return pusher.push(urls)
+
+
+def submit_sitemap(sitemap_url: str = "", site=None, token=None) -> dict:
+    """百度普通收录 - 提交 sitemap 地址，让百度定期抓取 sitemap 收录全站 URL。
+
+    - 接口：POST http://data.zz.baidu.com/sitemap?site=<site>&token=<token>
+    - 请求体：sitemap 的完整 URL（一行文本）。
+    - 成功响应形如 {"remain":n,"success":n}；失败形如 {"error":code,"message":"..."}。
+    - sitemap 提交不消耗“主动推送”每日条数配额，可避免 over quota 死循环。
+    """
+    site = (site or _default_site()).strip()
+    token = (token or _default_token()).strip()
+    if not site or not token:
+        return {"ok": False, "reason": "缺少 site/token，跳过百度 sitemap 提交", "pushed": 0}
+    sitemap_url = (sitemap_url or "").strip()
+    if not sitemap_url:
+        return {"ok": False, "reason": "缺少 sitemap_url，跳过", "pushed": 0}
+
+    url = f"{SITEMAP_API}?site={site}&token={token}"
+    last_err = None
+    sess = requests.Session()
+    sess.trust_env = False  # 忽略系统/环境代理，避免本机代理故障导致提交失败
+    for attempt in range(1, 4):  # 单次重试（指数退避），提升弱网环境成功率
+        try:
+            r = sess.post(
+                url,
+                data=sitemap_url.encode("utf-8"),
+                headers={"Content-Type": "text/plain", "User-Agent": common.DEFAULT_HEADERS["User-Agent"]},
+                timeout=30,
+            )
+            data = r.json() if r.content else {}
+            biz_err = data.get("error")
+            ok = r.status_code == 200 and (biz_err in (None, 0, "", "0"))
+            if ok:
+                # 提交成功：移除历史失败记录
+                try:
+                    os.remove(PUSH_ERROR)
+                except OSError:
+                    pass
+                return {
+                    "ok": True,
+                    "status": r.status_code,
+                    "success": data.get("success", 0),
+                    "remain": data.get("remain", 0),
+                    "reason": f"sitemap 提交成功: {sitemap_url}",
+                    **data,
+                }
+            # 失败：落盘到仓库 data/ 由 CI 自动提交，方便直接查看原因
+            common.write_json(PUSH_ERROR, {
+                "time": common.now_str(),
+                "reason": data.get("message") or f"HTTP {r.status_code}",
+                "detail": {"url": sitemap_url, **data},
+            })
+            return {"ok": False, "status": r.status_code, "reason": f"HTTP {r.status_code}: {data.get('message') or data}", **data}
+        except Exception as e:  # noqa: BLE001
+            last_err = f"{type(e).__name__}: {e}"
+            if attempt < 3:
+                time.sleep(1.5 * attempt)
+    return {"ok": False, "reason": last_err or "重试后仍失败", "pushed": 0}
 
 
 def _normalize_site(site: str) -> str:
@@ -270,8 +330,14 @@ if __name__ == "__main__":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
     db_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "iso_data.json")
     db = common.read_json(db_path)
-    if db:
-        res = push_incremental(db.get("items", []), db.get("categories", []))
-        print(json.dumps(res, ensure_ascii=False, indent=2))
-    else:
+    if not db:
         print("data/iso_data.json 不存在")
+        sys.exit(1)
+    site = _default_site()
+    base = _normalize_site(site) or (common.SITE_URL or "").strip().rstrip("/")
+    if not base:
+        print(json.dumps({"ok": False, "reason": "推送 base 为空：请配置 BAIDU_SITE（如 https://你的域名）"}, ensure_ascii=False, indent=2))
+        sys.exit(1)
+    # 默认：提交 sitemap（普通收录主路径）
+    res = submit_sitemap(sitemap_url=f"{base}/sitemap.xml")
+    print(json.dumps(res, ensure_ascii=False, indent=2))

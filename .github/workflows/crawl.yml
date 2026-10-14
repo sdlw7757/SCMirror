@@ -61,13 +61,13 @@ jobs:
           if [ -n "$BAIDU_SITE" ] && [ -n "$BAIDU_TOKEN" ]; then
             echo "BAIDU_SITE/BAIDU_TOKEN: 已配置"
           else
-            echo "WARN: BAIDU_SITE 或 BAIDU_TOKEN 未配置 —— 百度推送将被跳过（不会生成 .baidu_push_state.json）"
+            echo "WARN: BAIDU_SITE 或 BAIDU_TOKEN 未配置 —— 百度 sitemap 提交将被跳过"
           fi
           echo "SITE_URL: $SITE_URL"
-          if [ -f data/.baidu_push_state.json ]; then
-            echo "推送状态文件: 存在 ($(python -c "import json;print(len(json.load(open('data/.baidu_push_state.json'))['pushed']))") 条已推送)"
+          if [ -f data/.baidu_push_error.json ]; then
+            echo "百度提交错误记录: 存在 -> $(cat data/.baidu_push_error.json)"
           else
-            echo "推送状态文件: 不存在"
+            echo "百度提交错误记录: 无（最近一次 sitemap 提交成功）"
           fi
         env:
           SITE_URL: ${{ secrets.BAIDU_SITE }}
